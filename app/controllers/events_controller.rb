@@ -1,7 +1,10 @@
 class EventsController < ApplicationController
+  before_action do
+    @company = Company.find(params[:company_id])
+  end
 
   def index
-    @events = Event.all
+    @events = @company.events
   end
 
   def show
@@ -9,26 +12,26 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new
+    @event = @company.events.new
   end
 
   def create
-    @event = Event.new(event_params)
+    @event = @company.events.new(event_params)
     if @event.save
-      redirect_to event_path(@event)
+      redirect_to company_events_path(@company)
     else
       render :new
     end
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event = @company.events.find(params[:id])
   end
 
   def update
     @event = Event.find(params[:id])
     if @event.update(event_params)
-      redirect_to event_path(@event)
+      redirect_to company_event_path(@company, @event)
     else
       render :edit
     end
@@ -37,7 +40,7 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-    redirect_to events_path
+    redirect_to company_events_path(@company)
   end
 
   private
@@ -45,5 +48,4 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:description)
   end
-
 end

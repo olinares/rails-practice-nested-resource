@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="pull-right">
-    <%= link_to "New Event", new_event_path, class: "btn btn-info" %>
+    <%= link_to "New Event", new_company_event_path(@company), class: "btn btn-info" %>
   </div>
   <h1>Events</h1>
 </div>
@@ -18,7 +18,7 @@
         <td><%= link_to event.description, event_path(event) %></td>
         <td>
           <div class="pull-right">
-            <%= link_to "edit", edit_event_path(event) %>
+            <%= link_to "edit", edit_company_event_path(@company, @event) %>
             |
             <%= link_to "delete", event_path(event), method: :delete, data: {confirm: "Are you sure?"} %>
           </div>
